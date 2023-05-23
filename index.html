@@ -183,6 +183,18 @@
         let series = []
         let currentSeriesLength = 2
 
+        document.querySelectorAll('.ageOption').forEach(element => element.onclick = (event) => {
+            let target = event.target
+
+            if (Array.from(target.classList).indexOf('.ageOption') < 0) {
+                target = target.closest('.ageOption')
+            }
+
+            document.querySelector('#ageSelector > span').innerText = target.innerText
+            age = Number(target.dataset.age)
+            setScaledScores()
+        })
+
         function showLastSeries(index) {
             currentCharacter.innerText = series[series.length - 1].generated[index]
             setTimeout(() => {
