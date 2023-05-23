@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Letter-Number Sequencing</title>
+
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            background-color:#d9cece;
+        }
+        div {
+            box-sizing: border-box;
+        }
+        span, input {
+            font-family: "Inter", sans-serif;
+            line-height: 1;
+        }
+        .selectorOption:hover {
+            cursor: pointer;
+            background-color: #cc2929;
+        }
+        .selectorOption:hover > span {
+            color: #f2e6e6 !important;
+        }
+        .selectorOption:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+        .selectorOption:last-child {
+            border-radius: 0 0 10px 10px;
+        }
+        .selector:hover {
+            cursor: pointer;
+            background-color: #bfb6b6 !important;
+        }
+        #takeTest:hover, #proceedToNextSeries:hover {
+            cursor: pointer;
+            background-color: #d9cece !important;
+        }
+        #takeTest:hover > span, #proceedToNextSeries:hover > span {
+            color: #cc2929 !important;
+        } 
+        #takeTest:hover > svg, #proceedToNextSeries:hover > svg {
+            fill: #cc2929;
+        }
+        @media screen and (max-width: 500px) {
+            #content {
+                flex-grow: 1 !important;
+                margin: 0 !important;
+                align-self: stretch !important;
+            }
+            .descriptionActions {
+                flex-direction: column !important;
+                align-self: stretch !important;
+            }
+            #proceedToNextSeries {
+                align-self: stretch !important;
+            }
+            div:has(> #ageSelector) {
+                align-self: stretch !important;
+            }
+        }
+    </style>
+    <body>
+        <div style="position:fixed;width:100%;height:100%;display:flex;overflow:auto;">
+            <div id="content" style="display:flex;flex-direction:column;align-self:center;margin:0 auto;background-color:#f2e6e6;padding:40px;border-radius:20px;gap:40px;">
+                <span style="color:#cc2929;font-weight:700;">LETTER-NUMBER SEQUENCING</span>
+                <div id="descriptionScreen" style="display:flex;flex-direction:column;gap:40px;">
+                    <span style="max-width:500px;margin:-0.25em 0;line-height:1.5;color:#262424;">In this test, you'll listen to several series of letters and digits, such as <span id="seriesExample" style="font-weight:700;"></span>. After listening to a series, you'll be asked to type in a text box all of the letters and digits that were spoken, but with the digits coming first, ordered from smallest to largest, and then the letters in alphabetical order. In this case, you'd be have to type <span id="reorderedSeriesExample" style="font-weight:700;"></span>. Remember: you must first type all of the digits and only then type the letters, both in ascending order (1 before 9, A before Z)!</span>
+                    <div class="descriptionActions" style="display:flex;gap:40px;align-self:flex-end;">
+                        <div style="display:flex;flex-direction:column;position:relative;">
+                            <div data-options="voiceLanguages" class="selector" id="voiceLanguageSelector" style="display:flex;flex-direction:column;padding:20px;background-color:#d9cece;border-radius:10px;gap:20px;">
+                                <div style="display:flex;gap:20px;">
+                                    <span style="color:#cc2929;font-size:12px;font-weight:700;">VOICE LANGUAGE</span>
+                                    <svg style="min-width:12px;min-height:12px;" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#cc2929" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
+                                </div>
+                                <span style="color:#262424;"></span>
+                            </div>
+                            <div data-options="voiceLanguages" class="selectorOptions" id="voiceLanguageOptions" style="position:absolute;background-color:#bfb6b6;top:100%;margin-top:20px;border-radius:10px;display:flex;flex-direction:column;display:none;">
+                            </div>
+                        </div>
+                        <div id="takeTest" style="display:flex;background-color:#cc2929;padding:20px;border-radius:10px;align-items:center;gap:20px;">
+                            <span style="color:#f2e6e6;">Practice and take the test</span>
+                            <svg style="min-width:16px;min-height:16px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f2e6e6" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg>
+                        </div>
+                    </div>  
+                </div>
+                <div id="listeningScreen" style="display:none;gap:20px;">
+                    <svg style="min-width:16px;min-height:16px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#cc2929" viewBox="0 0 256 256"><path d="M157.27,21.22a12,12,0,0,0-12.64,1.31L75.88,76H32A20,20,0,0,0,12,96v64a20,20,0,0,0,20,20H75.88l68.75,53.47A12,12,0,0,0,164,224V32A12,12,0,0,0,157.27,21.22ZM36,100H68v56H36Zm104,99.46L92,162.13V93.87l48-37.33ZM212,128a44,44,0,0,1-11,29.11,12,12,0,1,1-18-15.88,20,20,0,0,0,0-26.43,12,12,0,0,1,18-15.86A43.94,43.94,0,0,1,212,128Zm40,0a83.87,83.87,0,0,1-21.39,56,12,12,0,0,1-17.89-16,60,60,0,0,0,0-80,12,12,0,1,1,17.88-16A83.87,83.87,0,0,1,252,128Z"></path></svg>
+                    <span style="display:flex;margin:-0.25em 0;max-width:500px;line-height:1.5;color:#262424;">Listen to the series!</span>
+                </div>
+                <div id="inputScreen" style="display:none;flex-direction:column;gap:40px;">
+                    <span style="max-width:500px;margin:-0.25em 0;line-height:1.5;color:#262424;">Enter the digits from smallest to largest, and then the letters in alphabetical order.</span>
+                    <input id="seriesInput" placeholder="Series" style="background-color:#d9cece;border:0;padding:20px;border-radius:10px;outline:none;color:#262424;font-size:16px;">
+                    <div id="proceedToNextSeries" style="display:flex;background-color:#cc2929;padding:20px;border-radius:10px;align-items:center;gap:20px;align-self:flex-end;">
+                        <span style="color:#f2e6e6;">Listen to the next series (or end the test)</span>
+                        <svg style="min-width:16px;min-height:16px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f2e6e6" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg>
+                    </div>
+                </div>
+                <div id="scoreScreen" style="display:none;flex-direction:column;gap:40px;">
+                    <div style="display:flex;flex-direction:column;position:relative;align-self:flex-start;">
+                        <div data-options="age" class="selector" id="ageSelector" style="display:flex;flex-direction:column;padding:20px;background-color:#d9cece;border-radius:10px;gap:20px;">
+                            <div style="display:flex;gap:20px;">
+                                <span style="color:#cc2929;font-size:12px;font-weight:700;">AGE RANGE</span>
+                                <svg style="min-width:12px;min-height:12px;" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#cc2929" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
+                            </div>
+                            <span style="color:#262424;">16-17</span>
+                        </div>
+                        <div data-options="age" class="selectorOptions" id="ageOptions" style="position:absolute;background-color:#bfb6b6;top:100%;margin-top:20px;border-radius:10px;display:flex;flex-direction:column;display:none;width:max-content;">
+                            <div data-age="17" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">16-17</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="19" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">18-19</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="24" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">20-24</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="29" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">25-29</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="34" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">30-34</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="44" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">35-44</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="54" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">45-54</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="64" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">55-64</span>
+                            </div>
+                            <div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>
+                            <div data-age="69" class="selectorOption ageOption" style="display:flex;padding:20px;">
+                                <span style="color:#403d3d;">65-69</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column; gap: 40px;">
+                        <span style="color:#cc2929;font-size:12px;font-weight:700;">RAW SCORE</span>
+                        <span id="rawScore" style="color:#262424;"></span>
+                    </div>
+                    <div style="display:flex;flex-direction:column; gap: 40px;">
+                        <span style="color:#cc2929;font-size:12px;font-weight:700;">SCALED SCORE (MEAN OF 10, STANDARD DEVIATION OF 3)</span>
+                        <span id="scaledScore" style="color:#262424;"></span>
+                    </div>
+                    <div style="display:flex;flex-direction:column; gap: 40px;">
+                        <span style="color:#cc2929;font-size:12px;font-weight:700;">SCALED SCORE (MEAN OF 100, STANDARD DEVIATION OF 15)</span>
+                        <span id="scaledScore2" style="color:#262424;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="module">
+        import { generateSeries, reorderSeries } from './series.js'
+        import scores from './scores.js'
+
+        seriesExample.textContent = generateSeries(4).join(' ')
+        reorderedSeriesExample.textContent = reorderSeries(seriesExample.textContent.split(' ')).join('')
+
+        const selectors = document.querySelectorAll('.selector')
+        selectors.forEach(selector => {
+            let options = document.querySelector(`.selectorOptions[data-options="${selector.dataset.options}"]`)
+            selector.onclick = (event) => {
+                if (options.style.display == 'flex') {
+                    options.style.display = 'none'
+                } else {
+                    options.style.display = 'flex'
+                }
+                event.stopPropagation()
+            }
+        })
+
+        window.onclick = (event) => {
+            document.querySelectorAll('.selectorOptions').forEach(selectorOptions => selectorOptions.style.display = 'none')
+        }
+
+        let age = 17
+
+        let voice
+
+        speechSynthesis.onvoiceschanged = () => {
+            const voices = speechSynthesis.getVoices()
+            const voiceLanguages = []
+
+            voice = voices[0]
+            document.querySelector('#voiceLanguageSelector > span').innerText = voices[0].lang         
+
+            voices.forEach((voice, index) => {
+                if (voiceLanguages.indexOf(voice.lang) < 0) {
+                    voiceLanguages.push(voice.lang)
+                    voiceLanguageOptions.insertAdjacentHTML('beforeend',  
+                `<div data-voice="${index}" class="selectorOption voiceLanguageOption" style="display:flex;padding:20px;">
+                    <span style="color:#403d3d;">${voice.lang}</span>
+                </div>` + (index < voices.length - 1 ? '<div style="margin:0 20px;height:1px;background-color:#d9cece;"></div>' : ''))
+                }
+            })
+
+            document.querySelectorAll('.voiceLanguageOption').forEach(element => element.onclick = (event) => {
+                let target = event.target
+
+                if (Array.from(target.classList).indexOf('.voiceLanguageOption') < 0) {
+                    target = target.closest('.voiceLanguageOption')
+                }
+
+                voice = voices[target.dataset.voice]
+                document.querySelector('#voiceLanguageSelector > span').innerText = voices[target.dataset.voice].lang
+            })
+
+            document.querySelectorAll('.ageOption').forEach(element => element.onclick = (event) => {
+                let target = event.target
+
+                if (Array.from(target.classList).indexOf('.ageOption') < 0) {
+                    target = target.closest('.ageOption')
+                }
+
+                document.querySelector('#ageSelector > span').innerText = target.innerText
+                age = Number(target.dataset.age)
+                setScaledScores()
+            })
+        }
+
+        let series = []
+        let currentSeriesLength = 2
+
+        function speakLastSeries(index) {
+            const spokenSeries = new SpeechSynthesisUtterance(series[series.length - 1].generated[index])
+
+            spokenSeries.voice = voice
+            spokenSeries.rate = 0.5
+
+            speechSynthesis.speak(spokenSeries)
+            spokenSeries.onend = () => {
+                if (index == currentSeriesLength - 1) {
+                    setTimeout(() => {
+                        listeningScreen.style.display = 'none'
+                        inputScreen.style.display = 'flex'
+                        seriesInput.focus()                                   
+                    }, 1000)                            
+                } else {
+                    speakLastSeries(index += 1)
+                }
+            }                    
+        }
+
+        function addCurrentSeries() {
+            const generatedSeries = generateSeries(currentSeriesLength)
+            const reorderedSeries = reorderSeries(generatedSeries)
+
+            series.push({
+                generated: generatedSeries,
+                reordered: reorderedSeries
+            })       
+        }
+
+        takeTest.onclick = () => {
+            console.log(1)
+            descriptionScreen.style.display = 'none'
+            listeningScreen.style.display = 'flex'
+
+            addCurrentSeries()
+            setTimeout(() => {
+                speakLastSeries(0)
+            }, 1000)     
+        }
+
+        let totalCorrect = 0
+
+        let currentTotalRepeats = 6
+        let currentRepeatsLeft = 6
+        let currentTotalFailures = 0
+
+        function setScaledScores() {
+            scores[age].every((rawScore, index) => {
+                if (totalCorrect <= rawScore) {
+                    scaledScore.innerText = index + 1
+                    scaledScore2.innerText = (100 + ((((index + 1) - 10) / 3) * 15))
+                    return false
+                }
+                return true
+            })
+        }
+
+        proceedToNextSeries.onclick = () => {
+            currentRepeatsLeft -= 1
+            if (seriesInput.value.toLowerCase() == series[series.length - 1].reordered.join('').toLowerCase()) {
+                series[series.length - 1].correct = true
+                totalCorrect += 1
+            } else {
+                series[series.length - 1].correct = false
+                currentTotalFailures += 1
+            }
+            if (currentSeriesLength < 8 && currentTotalFailures < currentTotalRepeats) {
+                if (currentRepeatsLeft == 0) {
+                    currentSeriesLength += 1
+                    if (currentSeriesLength == 3) {
+                        currentTotalRepeats = currentRepeatsLeft = 9
+                    } else {
+                        currentTotalRepeats = currentRepeatsLeft = 3
+                    }
+                    currentTotalFailures = 0
+                }
+
+                addCurrentSeries()
+
+                seriesInput.value = ''
+                inputScreen.style.display = 'none'
+                listeningScreen.style.display = 'flex'
+
+                setTimeout(() => {
+                    speakLastSeries(0)
+                }, 1000)     
+            } else if ((currentSeriesLength == 8 && currentRepeatsLeft == 0) || currentTotalRepeats == currentTotalFailures) {
+                inputScreen.style.display = 'none'
+                scoreScreen.style.display = 'flex'
+
+                rawScore.innerText = totalCorrect
+                setScaledScores()
+            }
+        }
+    </script>
+</html>
