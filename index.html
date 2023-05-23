@@ -184,7 +184,7 @@
         let currentSeriesLength = 2
 
         function showLastSeries(index) {
-            currentCharacter.innerText = series[series.length - 1].generated[index].toLowerCase()
+            currentCharacter.innerText = series[series.length - 1].generated[index]
             setTimeout(() => {
                 if (index == currentSeriesLength - 1) {
                     currentCharacter.innerText = ''

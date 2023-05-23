@@ -5,12 +5,12 @@ export function generateSeries(length) {
         let character
         if (series.length == 0 || series.length % 2 == 0) {
             character = String.fromCharCode(65 + Math.floor(Math.random() * 26))
-            if (series.indexOf(character) < 0) { 
+            if (series.indexOf(character) < 0 && character !== 'I' && character !== 'L' && character !== 'O') { 
                 series.push(character)
             }
         } else {
             character = String.fromCharCode(48 + Math.floor(Math.random() * 10))
-            if (series.indexOf(character) < 0) { 
+            if (series.indexOf(character) < 0 && character !== '1' && character !== '0') { 
                 series.push(character)
             }
         }
