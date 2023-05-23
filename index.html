@@ -247,11 +247,9 @@
             speechSynthesis.speak(spokenSeries)
             spokenSeries.onend = () => {
                 if (index == currentSeriesLength - 1) {
-                    setTimeout(() => {
-                        listeningScreen.style.display = 'none'
-                        inputScreen.style.display = 'flex'
-                        seriesInput.focus()                                   
-                    }, 1000)                            
+                    listeningScreen.style.display = 'none'
+                    inputScreen.style.display = 'flex'
+                    seriesInput.focus()                                                           
                 } else {
                     speakLastSeries(index += 1)
                 }
@@ -274,9 +272,7 @@
             listeningScreen.style.display = 'flex'
 
             addCurrentSeries()
-            setTimeout(() => {
-                speakLastSeries(0)
-            }, 1000)     
+            speakLastSeries(0)  
         }
 
         let totalCorrect = 0
